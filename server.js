@@ -13,12 +13,22 @@ var test = {
       "type": "template",
       "payload": {
         "template_type": "button",
-        "text": "Some text goes here",
+        "text": "להלן 3 הגינות הקרובות ביותר למיקומך",
         "buttons": [
           {
             "type": "web_url",
             "url": "http://www.calcalist.co.il/home/0,7340,L-8,00.html",
-            "title": "Button Title"
+            "title": "Button Title1"
+          },
+          {
+            "type": "web_url",
+            "url": "http://www.calcalist.co.il/home/0,7340,L-8,00.html",
+            "title": "Button Title2"
+          },
+          {
+            "type": "web_url",
+            "url": "http://www.calcalist.co.il/home/0,7340,L-8,00.html",
+            "title": "Button Title3"
           }
         ]
       }
