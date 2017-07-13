@@ -9,26 +9,21 @@ var gardens = [
     }]
 
 var test = {
-      "attachment": {
-        "type": "template",
-        "payload": {
-          "template_type": "button",
-          "text": "Hello!",
-          "buttons": [
-            {
-              "type": "show_block",
-              "block_name": "some block name",
-              "title": "Show the block!"
-            },
-            {
-              "type": "web_url",
-              "url": "https://petersapparel.parseapp.com/buy_item?item_id=100",
-              "title": "Buy Item"
-            }
-          ]
-        }
+    "attachment": {
+      "type": "template",
+      "payload": {
+        "template_type": "button",
+        "text": "Some text goes here",
+        "buttons": [
+          {
+            "type": "web_url",
+            "url": "http://www.calcalist.co.il/home/0,7340,L-8,00.html",
+            "title": "Button Title"
+          }
+        ]
       }
     }
+  }
 
 // call the packages we need
 var express    = require('express');        // call express
@@ -63,9 +58,10 @@ router.route('/:lat/:long')
 
     // get the bear with that id (accessed at GET http://localhost:8080/api/bears/:bear_id)
     .get(function(req, res) {
-        //var jsonResponse = [];
-        //jsonResponse.push({ "messages": test});
-        res.send('{"message": [' + JSON.stringify(test) + ']}');
+        var jsonResponse = [];
+        jsonResponse.push(test);
+        res.send(jsonResponse);
+        //res.send('{"message": [' + JSON.stringify(test) + ']}');
     });
 
 // REGISTER OUR ROUTES -------------------------------
