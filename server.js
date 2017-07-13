@@ -8,8 +8,7 @@ var gardens = [
         "longitude": "34.7649306"
     }]
 
-var test = [
-    {
+var test = {
       "attachment": {
         "type": "template",
         "payload": {
@@ -30,7 +29,6 @@ var test = [
         }
       }
     }
-  ]
 
 // call the packages we need
 var express    = require('express');        // call express
@@ -65,9 +63,9 @@ router.route('/:lat/:long')
 
     // get the bear with that id (accessed at GET http://localhost:8080/api/bears/:bear_id)
     .get(function(req, res) {
-        var jsonResponse = [];
-        jsonResponse.push({ "messages": test});
-        res.send(jsonResponse);
+        //var jsonResponse = [];
+        //jsonResponse.push({ "messages": test});
+        res.send('{"message": [' + JSON.stringify(test) + ']}');
     });
 
 // REGISTER OUR ROUTES -------------------------------
