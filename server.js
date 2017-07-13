@@ -69,6 +69,8 @@ router.route('/:lat/:long')
     // get the bear with that id (accessed at GET http://localhost:8080/api/bears/:bear_id)
     .get(function(req, res) {
         var jsonResponse = [];
+        test.attachment.payload.buttons[0].url = 'https://www.google.com/maps/dir/?api=1&origin=' + req.params.lat + '%2C' + req.params.long
+        + '&destination=32.0554841%2C34.7649306&travelmode=walking'
         jsonResponse.push(test);
         res.send(jsonResponse);
         //res.send('{"message": [' + JSON.stringify(test) + ']}');
