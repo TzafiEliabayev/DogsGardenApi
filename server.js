@@ -8,6 +8,30 @@ var gardens = [
         "longitude": "34.7649306"
     }]
 
+var test = [
+    {
+      "attachment": {
+        "type": "template",
+        "payload": {
+          "template_type": "button",
+          "text": "Hello!",
+          "buttons": [
+            {
+              "type": "show_block",
+              "block_name": "some block name",
+              "title": "Show the block!"
+            },
+            {
+              "type": "web_url",
+              "url": "https://petersapparel.parseapp.com/buy_item?item_id=100",
+              "title": "Buy Item"
+            }
+          ]
+        }
+      }
+    }
+  ]
+
 // call the packages we need
 var express    = require('express');        // call express
 var app        = express();                 // define our app using express
@@ -42,13 +66,7 @@ router.route('/:lat/:long')
     // get the bear with that id (accessed at GET http://localhost:8080/api/bears/:bear_id)
     .get(function(req, res) {
         var jsonResponse = [];
-        jsonResponse.push({ "messages": "[{'attachment': {'type': 'template','payload': {'template_type': 'button','text': 'Hello!', 'buttons': [{'type': 'show_block','block_name': 'some block name', 'title': 'Show the block!'},  {'type': 'web_url','url': 'https://www.google.co.il/maps/dir/32.0551441,34.7726752/32.0592177,34.7740485/@32.057208,34.7718061,17z/data=!3m1!4b1!4m2!4m1!3e2?hl=en','title': 'Buy Item'
-            }
-          ]
-        }
-      }
-    }
-  ]});
+        jsonResponse.push({ "messages": test});
         res.send(jsonResponse);
     });
 
