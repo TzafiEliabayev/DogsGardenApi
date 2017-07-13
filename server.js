@@ -30,12 +30,13 @@ router.get('/', function(req, res) {
 });
 
 // more routes for our API will happen here
-router.route('/:loc')
+router.route('/:lat/:long')
 
     // get the bear with that id (accessed at GET http://localhost:8080/api/bears/:bear_id)
     .get(function(req, res) {
-        var result = "hi";
-        res.json(result);
+        var jsonResponse = [];
+        jsonResponse.push({ "text": "Hi."});
+        res.send(jsonResponse);
     });
 
 // REGISTER OUR ROUTES -------------------------------
