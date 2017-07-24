@@ -1,5 +1,25 @@
 // BASE SETUP
 // =============================================================================
+
+// call the packages we need
+var express    = require('express');        // call express
+var app        = express();                 // define our app using express
+var bodyParser = require('body-parser');
+var gardensQT  = require('./gardenQuadtree');
+var gardensImport  = require('./gardensImport');
+var $               = require('jquery');
+var d3         = require('d3-quadtree');
+
+// configure app to use bodyParser()
+// this will let us get the data from a POST
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
+var port = process.env.PORT || 8080;        // set our port
+
+var gardenim = gardensImport.getGardens();
+console.log(gardenim[0]);
+
 var gardens = [
     {
         "name": "גן סדנת האמנים דרויאנוב",
@@ -35,17 +55,37 @@ var test = {
     }
   }
 
-// call the packages we need
-var express    = require('express');        // call express
-var app        = express();                 // define our app using express
-var bodyParser = require('body-parser');
 
-// configure app to use bodyParser()
-// this will let us get the data from a POST
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
 
-var port = process.env.PORT || 8080;        // set our port
+var width = 600,
+    height = 600;
+
+// var data = d3.range(1000).map(function() {
+//   return [Math.random() * width, Math.random() * height];
+// });
+// console.log(data);
+var data = [[10,170],[40,80],[50,30],[70,30],[210,180],[200,90],[250,10],[350,160],[370,30],[390,00],[400,50],[490,80],[540,150]];
+
+var quadtree = d3.quadtree()
+    .extent([[-1, -1], [width + 1, height + 1]]);
+quadtree.addAll(data);
+
+console.log(quadtree.find(382, 28));
+console.log(quadtree.data());
+
+
+
+// for(gardenIndex in gardensJson){
+//     var fullAddress = gardensJson[gardenIndex].shem_rechov + ' ' + gardensJson[gardenIndex].ms_bait + ' תל-אביב יפו ישראל';
+//     console.log(fullAddress);
+//     var geocodeAddress = fullAddress.replace(/ /g,"+");
+//     console.log(geocodeAddress);
+//     var myjson;
+//     // $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?address=" + geocodeAddress + "&key=AIzaSyA8nx1tZbumGf8TLv-6GnM9zYcWSkM5ODM", function(json){
+//     //     myjson = json;
+//     //     console.log(myjson);
+//     // });
+// }
 
 // ROUTES FOR OUR API
 // =============================================================================
