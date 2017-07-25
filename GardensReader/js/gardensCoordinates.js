@@ -4,7 +4,12 @@ var xmlhttprequest = require('xmlhttprequest');
 var fs = require('fs');
 
 var getGardens = function getGardens(gardensJsonFileName){
+try{
+  console.log("inside the COORDINATES function");
+  setTimeout(function(){
+      console.log("after timeout");
   var jsonFile = require('../' + gardensJsonFileName);
+  console.log("after getting json file");
   var gardensCount = jsonFile.length;
   var gardens = new Array();
 
@@ -38,14 +43,18 @@ var getGardens = function getGardens(gardensJsonFileName){
       gardens.push(currentGarden);
     }
 });
+  var jsonGardens = JSON.stringify(gardens);
+  fs.writeFile("test.json", jsonGardens, function(err) {
+      if(err) {
+          return console.log(err);
+      }
+  });
+  }, 10000);
 
-fs.writeFile("test.json", gardens, function(err) {
-    if(err) {
-        return console.log(err);
-    }
-});
-
-return gardens;
+}
+catch(err){
+console.log(err);
+}
 }
 
 exports.getGardens = getGardens;
