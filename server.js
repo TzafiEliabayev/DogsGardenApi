@@ -20,15 +20,24 @@ var port = process.env.PORT || 8080;        // set our port
 var gardensCoordinates = require('./GardensCoordinates.json');
 console.log(gardensCoordinates[0]);
 
+var a = 32.1244547;
+var b = 34.7932465;
+console.log("find:   " + gardensCoordinates.find(x => x.coordinates.lat === a && x.coordinates.lng === b).ms_bait);
 
+var coordinates = new Array();
+gardensCoordinates.forEach(function(element) {
+    var current = [element.coordinates.lat, element.coordinates.lng];
+    coordinates.push(current);
+  });
+console.log(coordinates);
 
-var gardens = [
-    {
-        "name": "גן סדנת האמנים דרויאנוב",
-        "location": "אליפלט 5, תל אביב יפו, ישראל",
-        "latitude": "32.0554841",
-        "longitude": "34.7649306"
-    }]
+// var gardens = [
+//     {
+//         "name": "גן סדנת האמנים דרויאנוב",
+//         "location": "אליפלט 5, תל אביב יפו, ישראל",
+//         "latitude": "32.0554841",
+//         "longitude": "34.7649306"
+//     }]
 
 var test = {
     "attachment": {
@@ -57,23 +66,23 @@ var test = {
     }
   }
 
+//32.022990, 34.738512
+//32.154185, 34.872408
 
-
-var width = 600,
-    height = 600;
+//var width = 600,
+//    height = 600;
 
 // var data = d3.range(1000).map(function() {
 //   return [Math.random() * width, Math.random() * height];
 // });
 // console.log(data);
-var data = [[10,170],[40,80],[50,30],[70,30],[210,180],[200,90],[250,10],[350,160],[370,30],[390,00],[400,50],[490,80],[540,150]];
+//var data = [[10,170],[40,80],[50,30],[70,30],[210,180],[200,90],[250,10],[350,160],[370,30],[390,00],[400,50],[490,80],[540,150]];
 
 var quadtree = d3.quadtree()
-    .extent([[-1, -1], [width + 1, height + 1]]);
-quadtree.addAll(data);
+    .extent([[32.022990, 34.738512], [32.154185, 34.872408]]);
+quadtree.addAll(coordinates);
 
-console.log(quadtree.find(382, 28));
-console.log(quadtree.data());
+console.log("Testing search result >>> " + quadtree.find(32.125710, 34.800915));
 
 
 
@@ -96,7 +105,7 @@ var router = express.Router();              // get an instance of the express Ro
 // middleware to use for all requests
 router.use(function(req, res, next) {
     // do logging
-    console.log(gardens);
+    console.log("router.use");
     next(); // make sure we go to the next routes and don't stop here
 });
 
