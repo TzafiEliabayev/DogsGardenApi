@@ -44,7 +44,7 @@ try{
     }
 });
   var jsonGardens = JSON.stringify(gardens);
-  fs.writeFile("test.json", jsonGardens, function(err) {
+  fs.writeFile("GardensCoordinates.json", jsonGardens, function(err) {
       if(err) {
           return console.log(err);
       }

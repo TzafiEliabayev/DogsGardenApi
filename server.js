@@ -17,8 +17,10 @@ app.use(bodyParser.json());
 
 var port = process.env.PORT || 8080;        // set our port
 
-var gardenim = gardensImport.getGardens();
-console.log(gardenim[0]);
+var gardensCoordinates = require('./GardensCoordinates.json');
+console.log(gardensCoordinates[0]);
+
+
 
 var gardens = [
     {
