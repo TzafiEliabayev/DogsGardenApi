@@ -1,13 +1,8 @@
-// BASE SETUP
-// =============================================================================
-
-// call the packages we need
-var express    = require('express');        // call express
-var app        = express();                 // define our app using express
+var express    = require('express');
+var app        = express();
 var bodyParser = require('body-parser');
 var gardensQT  = require('./gardenQuadtree');
-var gardensImport  = require('./gardensImport');
-var $               = require('jquery');
+var chatfuel  = require('./chatfuel');
 var d3         = require('d3-quadtree');
 
 // configure app to use bodyParser()
@@ -30,14 +25,6 @@ gardensCoordinates.forEach(function(element) {
     coordinates.push(current);
   });
 console.log(coordinates);
-
-// var gardens = [
-//     {
-//         "name": "גן סדנת האמנים דרויאנוב",
-//         "location": "אליפלט 5, תל אביב יפו, ישראל",
-//         "latitude": "32.0554841",
-//         "longitude": "34.7649306"
-//     }]
 
 var test = {
     "attachment": {
@@ -66,37 +53,11 @@ var test = {
     }
   }
 
-//32.022990, 34.738512
-//32.154185, 34.872408
-
-//var width = 600,
-//    height = 600;
-
-// var data = d3.range(1000).map(function() {
-//   return [Math.random() * width, Math.random() * height];
-// });
-// console.log(data);
-//var data = [[10,170],[40,80],[50,30],[70,30],[210,180],[200,90],[250,10],[350,160],[370,30],[390,00],[400,50],[490,80],[540,150]];
-
 var quadtree = d3.quadtree()
     .extent([[32.022990, 34.738512], [32.154185, 34.872408]]);
 quadtree.addAll(coordinates);
 
 console.log("Testing search result >>> " + quadtree.find(32.125710, 34.800915));
-
-
-
-// for(gardenIndex in gardensJson){
-//     var fullAddress = gardensJson[gardenIndex].shem_rechov + ' ' + gardensJson[gardenIndex].ms_bait + ' תל-אביב יפו ישראל';
-//     console.log(fullAddress);
-//     var geocodeAddress = fullAddress.replace(/ /g,"+");
-//     console.log(geocodeAddress);
-//     var myjson;
-//     // $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?address=" + geocodeAddress + "&key=AIzaSyA8nx1tZbumGf8TLv-6GnM9zYcWSkM5ODM", function(json){
-//     //     myjson = json;
-//     //     console.log(myjson);
-//     // });
-// }
 
 // ROUTES FOR OUR API
 // =============================================================================
