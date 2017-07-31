@@ -43,7 +43,7 @@ function createChatfuelButtonsAnswer(startingPoint, gardensArray){
             buttons.push(createPathButton(startingPoint, element.coordinates, element.name));
         });
     }
-    //result.attachment.payload.text = ''
+    result.attachment.payload.text = 'test';
     result.attachment.payload.buttons = buttons;
     jsonResponse.push(result);
     return jsonResponse;

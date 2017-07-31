@@ -33,8 +33,8 @@ console.log('garden is: ' + garden);
         console.log(gardens);
         var result = chatfuel.createChatfuelButtonsAnswer({'lat': '32.125710',
                           'long': '34.800915'}, gardens);
-        console.log(JSON.stringify(result[0].attachment.payload.buttons[0]));
-        //console.log(result);
+        console.log(JSON.stringify(result));
+        console.log(result);
 // ROUTES FOR OUR API
 // =============================================================================
 var router = express.Router();              // get an instance of the express Router
