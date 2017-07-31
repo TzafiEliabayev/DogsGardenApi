@@ -33,7 +33,8 @@ console.log('garden is: ' + garden);
         console.log(gardens);
         var result = chatfuel.createChatfuelButtonsAnswer({'lat': '32.125710',
                           'long': '34.800915'}, gardens);
-        console.log(result);
+        console.log(JSON.stringify(result[0].attachment.payload.buttons[0]));
+        //console.log(result);
 // ROUTES FOR OUR API
 // =============================================================================
 var router = express.Router();              // get an instance of the express Router
@@ -55,6 +56,7 @@ router.route('/:lat/:long')
 
     // get the bear with that id (accessed at GET http://localhost:8080/api/bears/:bear_id)
     .get(function(req, res) {
+        return result;
         var nearest = quadtree.find(req.params.lat, req.params.long);
         console.log(nearest);
         var garden = gardensCoordinates.find(x => x.coordinates.lat === nearest[0] && x.coordinates.lng === nearest[1]);
