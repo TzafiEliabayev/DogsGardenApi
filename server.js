@@ -72,15 +72,19 @@ router.route('/:lat/:long')
 
     // get the bear with that id (accessed at GET http://localhost:8080/api/bears/:bear_id)
     .get(function(req, res) {
-        var jsonResponse = [];
         var nearest = quadtree.find(req.params.lat, req.params.long);
         console.log(nearest);
         var garden = gardensCoordinates.find(x => x.coordinates.lat === nearest[0] && x.coordinates.lng === nearest[1]);
-        test.attachment.payload.buttons[0].url = 'https://www.google.com/maps/dir/?api=1&origin=' + req.params.lat + '%2C' + req.params.long
-        + '&destination=' + nearest[0] + '%2C' + nearest[1] + '&travelmode=walking';
-        test.attachment.payload.buttons[0].title = garden.shem_gina;
-        jsonResponse.push(test);
-        res.send(jsonResponse);
+        var gardens = [{'coordinates': {
+                          'lat': garden.coordinates.lat,
+                          'long': garden.coordinates.lng},
+                        'name': garden.shem_gina}];
+        console.log(gardens);
+        var result = chatfuel.createChatfuelButtonsAnswer(req.params, gardens);
+        console.log(result);
+        // test.attachment.payload.buttons[0].url = 'https://www.google.com/maps/dir/?api=1&origin=' + req.params.lat + '%2C' + req.params.long
+        // + '&destination=' + nearest[0] + '%2C' + nearest[1] + '&travelmode=walking';
+        res.send(result);
         //res.send('{"message": [' + JSON.stringify(test) + ']}');
     });
 
