@@ -1,8 +1,8 @@
 var express    = require('express');
 var app        = express();
 var bodyParser = require('body-parser');
-var gardensQT  = require('./gardenQuadtree');
-var chatfuel  = require('./chatfuel');
+var gardensQT  = require('./js/gardenQuadtree');
+var chatfuel  = require('./js/chatfuel');
 var d3         = require('d3-quadtree');
 var gardensCoordinates = require('./GardensCoordinates.json');
 
@@ -23,7 +23,17 @@ var quadtree = d3.quadtree()
 quadtree.addAll(coordinates);
 
 console.log("Testing search result >>> " + quadtree.find(32.125710, 34.800915));
-
+var nearest = quadtree.find(32.125710, 34.800915);
+var garden = gardensCoordinates.find(x => x.coordinates.lat === nearest[0] && x.coordinates.lng === nearest[1]);
+console.log('garden is: ' + garden);
+        var gardens = [{'coordinates': {
+                          'lat': garden.coordinates.lat,
+                          'long': garden.coordinates.lng},
+                        'name': garden.shem_gina}];
+        console.log(gardens);
+        var result = chatfuel.createChatfuelButtonsAnswer({'lat': '32.125710',
+                          'long': '34.800915'}, gardens);
+        console.log(result);
 // ROUTES FOR OUR API
 // =============================================================================
 var router = express.Router();              // get an instance of the express Router
@@ -52,7 +62,9 @@ router.route('/:lat/:long')
                           'lat': garden.coordinates.lat,
                           'long': garden.coordinates.lng},
                         'name': garden.shem_gina}];
-        var result = chatfuel.createChatfuelButtonsAnswer(req.params, gardens)
+        console.log(gardens);
+        var result = chatfuel.createChatfuelButtonsAnswer(req.params, gardens);
+        console.log(result);
         // test.attachment.payload.buttons[0].url = 'https://www.google.com/maps/dir/?api=1&origin=' + req.params.lat + '%2C' + req.params.long
         // + '&destination=' + nearest[0] + '%2C' + nearest[1] + '&travelmode=walking';
         res.send(result);

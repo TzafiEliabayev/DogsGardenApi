@@ -14,8 +14,8 @@ function pathButton(url, title){
 }
 
 function createPathButton(starting, desination, title){
-    var pathUrl = pathUrl(starting, desination);
-    var button = pathButton(pathUrl, title);
+    var url = pathUrl(starting, desination);
+    var button = pathButton(url, title);
     return button;
 }
 
