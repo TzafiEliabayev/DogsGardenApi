@@ -1,8 +1,8 @@
 var express    = require('express');
 var app        = express();
 var bodyParser = require('body-parser');
-var gardensQT  = require('./gardenQuadtree');
-var chatfuel  = require('./chatfuel');
+var gardensQT  = require('./js/gardenQuadtree');
+var chatfuel  = require('./js/chatfuel');
 var d3         = require('d3-quadtree');
 var gardensCoordinates = require('./GardensCoordinates.json');
 
