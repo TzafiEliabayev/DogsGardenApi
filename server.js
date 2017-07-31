@@ -1,8 +1,8 @@
 var express    = require('express');
 var app        = express();
 var bodyParser = require('body-parser');
-var gardensQT  = require('./js/gardenQuadtree');
-var chatfuel  = require('./js/chatfuel');
+var gardensQT  = require('./gardenQuadtree');
+var chatfuel  = require('./chatfuel');
 var d3         = require('d3-quadtree');
 var gardensCoordinates = require('./GardensCoordinates.json');
 
@@ -18,23 +18,39 @@ gardensCoordinates.forEach(function(element) {
   });
 console.log(coordinates);
 
+var test = {
+    "attachment": {
+      "type": "template",
+      "payload": {
+        "template_type": "button",
+        "text": "להלן 3 הגינות הקרובות ביותר למיקומך",
+        "buttons": [
+          {
+            "type": "web_url",
+            "url": "http://www.calcalist.co.il/home/0,7340,L-8,00.html",
+            "title": "Button Title1"
+          },
+          {
+            "type": "web_url",
+            "url": "http://www.calcalist.co.il/home/0,7340,L-8,00.html",
+            "title": "Button Title2"
+          },
+          {
+            "type": "web_url",
+            "url": "http://www.calcalist.co.il/home/0,7340,L-8,00.html",
+            "title": "Button Title3"
+          }
+        ]
+      }
+    }
+  }
+
 var quadtree = d3.quadtree()
     .extent([[32.022990, 34.738512], [32.154185, 34.872408]]);
 quadtree.addAll(coordinates);
 
 console.log("Testing search result >>> " + quadtree.find(32.125710, 34.800915));
-var nearest = quadtree.find(32.125710, 34.800915);
-var garden = gardensCoordinates.find(x => x.coordinates.lat === nearest[0] && x.coordinates.lng === nearest[1]);
-console.log('garden is: ' + garden);
-        var gardens = [{'coordinates': {
-                          'lat': garden.coordinates.lat,
-                          'long': garden.coordinates.lng},
-                        'name': garden.shem_gina}];
-        console.log(gardens);
-        var result = chatfuel.createChatfuelButtonsAnswer({'lat': '32.125710',
-                          'long': '34.800915'}, gardens);
-        console.log(JSON.stringify(result));
-        console.log(result);
+
 // ROUTES FOR OUR API
 // =============================================================================
 var router = express.Router();              // get an instance of the express Router
@@ -56,20 +72,15 @@ router.route('/:lat/:long')
 
     // get the bear with that id (accessed at GET http://localhost:8080/api/bears/:bear_id)
     .get(function(req, res) {
-        return result;
+        var jsonResponse = [];
         var nearest = quadtree.find(req.params.lat, req.params.long);
         console.log(nearest);
         var garden = gardensCoordinates.find(x => x.coordinates.lat === nearest[0] && x.coordinates.lng === nearest[1]);
-        var gardens = [{'coordinates': {
-                          'lat': garden.coordinates.lat,
-                          'long': garden.coordinates.lng},
-                        'name': garden.shem_gina}];
-        console.log(gardens);
-        var result = chatfuel.createChatfuelButtonsAnswer(req.params, gardens);
-        console.log(result);
-        // test.attachment.payload.buttons[0].url = 'https://www.google.com/maps/dir/?api=1&origin=' + req.params.lat + '%2C' + req.params.long
-        // + '&destination=' + nearest[0] + '%2C' + nearest[1] + '&travelmode=walking';
-        res.send(result);
+        test.attachment.payload.buttons[0].url = 'https://www.google.com/maps/dir/?api=1&origin=' + req.params.lat + '%2C' + req.params.long
+        + '&destination=' + nearest[0] + '%2C' + nearest[1] + '&travelmode=walking';
+        test.attachment.payload.buttons[0].title = garden.shem_gina;
+        jsonResponse.push(test);
+        res.send(jsonResponse);
         //res.send('{"message": [' + JSON.stringify(test) + ']}');
     });
 
