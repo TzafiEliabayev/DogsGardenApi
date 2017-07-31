@@ -33,20 +33,20 @@ function getChatfuelEmptyAnswer(){
     return result;
 }
 
-function createChatfuelButtonsAnswer(startingPoint, gardens){
+function createChatfuelButtonsAnswer(startingPoint, gardensArray){
+    var jsonResponse = [];
     var result = getChatfuelEmptyAnswer();
+    var buttons = new Array();
     //Handle list of gardens
-    if(Array.isArray(gardens)){
-        gardens.forEach(function(element) {
-
+    if(Array.isArray(gardensArray)){
+        gardensArray.forEach(function(element) {
+            buttons.push(createPathButton(startingPoint, element.coordinates, element.name));
         });
     }
-    else{
-
-    }
+    //result.attachment.payload.text = ''
+    result.attachment.payload.buttons = buttons;
+    jsonResponse.push(result);
+    return jsonResponse;
 }
 
-
-
-
-exports.createPathButton = createPathButton;
+exports.createChatfuelButtonsAnswer = createChatfuelButtonsAnswer;
