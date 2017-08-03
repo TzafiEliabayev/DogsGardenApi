@@ -22,7 +22,6 @@ function GardensQuadtree(gardensJson, swPoint, nePoint){
     this.coordinatesList = createCoordinatesList(gardensJson);
     this.gardensQT = d3.quadtree().extent([swPoint, nePoint]);
     this.gardensQT.addAll(this.coordinatesList);
-    console.log('DATA:   ' + this.gardensQT.data());
 }
 
 GardensQuadtree.prototype.findNearestGarden = function(basePoint) {
