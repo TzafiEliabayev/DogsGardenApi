@@ -1,22 +1,22 @@
 var express    = require('express');
 var app        = express();
 var bodyParser = require('body-parser');
-var gardensQT  = require('./js/gardenQuadtree');
+var gardensQT  = require('./js/gardens');
 var chatfuel  = require('./js/chatfuel');
 var d3         = require('d3-quadtree');
-var gardensCoordinates = require('./GardensCoordinates.json');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 var port = process.env.PORT || 8080;
 
-var coordinates = new Array();
-gardensCoordinates.forEach(function(element) {
-    var current = [element.coordinates.lat, element.coordinates.lng];
-    coordinates.push(current);
-  });
-console.log(coordinates);
+
+// var coordinates = new Array();
+// gardensCoordinates.forEach(function(element) {
+//     var current = [element.coordinates.lat, element.coordinates.lng];
+//     coordinates.push(current);
+//   });
+// console.log(coordinates);
 
 // var test = {
 //     "attachment": {
@@ -44,12 +44,14 @@ console.log(coordinates);
 //       }
 //     }
 //   }
-
-var quadtree = d3.quadtree()
-    .extent([[32.022990, 34.738512], [32.154185, 34.872408]]);
-quadtree.addAll(coordinates);
-
-console.log("Testing search result >>> " + quadtree.find(32.125710, 34.800915));
+var gardensJson = require('./GardensCoordinates.json');
+var swPoint = [32.022990, 34.738512];
+var nePoint = [32.154185, 34.872408];
+var gardens = new gardensQT.GardensQuadtree(gardensJson, swPoint, nePoint);
+// console.log("Testing search result >>> " + JSON.stringify(gardens.findNearestGarden({
+//     'lat': 32.125710,
+//     'lng': 34.800915
+//   })));
 
 // ROUTES FOR OUR API
 // =============================================================================
@@ -72,16 +74,18 @@ router.route('/:lat/:long')
 
     // get the bear with that id (accessed at GET http://localhost:8080/api/bears/:bear_id)
     .get(function(req, res) {
-        var nearest = quadtree.find(req.params.lat, req.params.long);
-        console.log(nearest);
-        var garden = gardensCoordinates.find(x => x.coordinates.lat === nearest[0] && x.coordinates.lng === nearest[1]);
-        var gardens = [{'coordinates': {
-                          'lat': garden.coordinates.lat,
-                          'long': garden.coordinates.lng},
-                        'name': garden.shem_gina}];
-        console.log(gardens);
-        var result = chatfuel.createChatfuelButtonsAnswer(req.params, gardens);
-        console.log(result);
+        //console.log('req.params >>>>>>>>>>>>>>>>>> ' + JSON.stringify(req.params));
+        var nearest = gardens.findNearestGarden(req.params);
+        // var nearest = quadtree.find(req.params.lat, req.params.long);
+        // console.log(nearest);
+        // var garden = gardensCoordinates.find(x => x.coordinates.lat === nearest[0] && x.coordinates.lng === nearest[1]);
+        var gardenInfo = [{'coordinates': {
+                          'lat': nearest.coordinates.lat,
+                          'long': nearest.coordinates.lng},
+                        'name': nearest.shem_gina}];
+        //console.log(gardens);
+        var result = chatfuel.createChatfuelButtonsAnswer(req.params, gardenInfo);
+        //console.log(result);
         // test.attachment.payload.buttons[0].url = 'https://www.google.com/maps/dir/?api=1&origin=' + req.params.lat + '%2C' + req.params.long
         // + '&destination=' + nearest[0] + '%2C' + nearest[1] + '&travelmode=walking';
         res.send(result);
