@@ -18,32 +18,32 @@ gardensCoordinates.forEach(function(element) {
   });
 console.log(coordinates);
 
-var test = {
-    "attachment": {
-      "type": "template",
-      "payload": {
-        "template_type": "button",
-        "text": "להלן 3 הגינות הקרובות ביותר למיקומך",
-        "buttons": [
-          {
-            "type": "web_url",
-            "url": "http://www.calcalist.co.il/home/0,7340,L-8,00.html",
-            "title": "Button Title1"
-          },
-          {
-            "type": "web_url",
-            "url": "http://www.calcalist.co.il/home/0,7340,L-8,00.html",
-            "title": "Button Title2"
-          },
-          {
-            "type": "web_url",
-            "url": "http://www.calcalist.co.il/home/0,7340,L-8,00.html",
-            "title": "Button Title3"
-          }
-        ]
-      }
-    }
-  }
+// var test = {
+//     "attachment": {
+//       "type": "template",
+//       "payload": {
+//         "template_type": "button",
+//         "text": "להלן 3 הגינות הקרובות ביותר למיקומך",
+//         "buttons": [
+//           {
+//             "type": "web_url",
+//             "url": "http://www.calcalist.co.il/home/0,7340,L-8,00.html",
+//             "title": "Button Title1"
+//           },
+//           {
+//             "type": "web_url",
+//             "url": "http://www.calcalist.co.il/home/0,7340,L-8,00.html",
+//             "title": "Button Title2"
+//           },
+//           {
+//             "type": "web_url",
+//             "url": "http://www.calcalist.co.il/home/0,7340,L-8,00.html",
+//             "title": "Button Title3"
+//           }
+//         ]
+//       }
+//     }
+//   }
 
 var quadtree = d3.quadtree()
     .extent([[32.022990, 34.738512], [32.154185, 34.872408]]);
@@ -56,16 +56,16 @@ console.log("Testing search result >>> " + quadtree.find(32.125710, 34.800915));
 var router = express.Router();              // get an instance of the express Router
 
 // middleware to use for all requests
-router.use(function(req, res, next) {
-    // do logging
-    console.log("router.use");
-    next(); // make sure we go to the next routes and don't stop here
-});
+// router.use(function(req, res, next) {
+//     // do logging
+//     console.log("router.use");
+//     next(); // make sure we go to the next routes and don't stop here
+// });
 
 // test route to make sure everything is working (accessed at GET http://localhost:8080/api)
-router.get('/', function(req, res) {
-    res.json({ message: 'hooray! welcome to our api!' });
-});
+// router.get('/', function(req, res) {
+//     res.json({ message: 'hooray! welcome to our api!' });
+// });
 
 // more routes for our API will happen here
 router.route('/:lat/:long')
