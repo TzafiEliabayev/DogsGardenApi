@@ -10,7 +10,14 @@ function createCoordinatesList(gardensJson){
 }
 
 function GardensQuadtree(gardensJson, swPoint, nePoint){
-    console.log('sw:  ' + swPoint);
+    this.swPoint = {
+        'lat': swPoint[0],
+        'long': swPoint[1]
+    };
+    this.nePoint = {
+        'lat': nePoint[0],
+        'long': nePoint[1]
+    };
     this.gardensJson = gardensJson;
     this.coordinatesList = createCoordinatesList(gardensJson);
     this.gardensQT = d3.quadtree().extent([swPoint, nePoint]);
@@ -23,5 +30,11 @@ GardensQuadtree.prototype.findNearestGarden = function(basePoint) {
     var nearestGarden = this.gardensJson.find(x => x.coordinates.lat === nearestPoint[0] && x.coordinates.lng === nearestPoint[1]);
     return nearestGarden;
 };
+
+GardensQuadtree.prototype.isPointInRegion = function(point){
+    var isInside =  point.lat >= this.swPoint.lat && point.lat <= this.nePoint.lat &&
+                    point.long >= this.swPoint.long && point.long <= this.nePoint.long;
+    return isInside;
+}
 
 exports.GardensQuadtree = GardensQuadtree;
