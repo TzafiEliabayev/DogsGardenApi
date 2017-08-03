@@ -1,4 +1,4 @@
-var d3         = require('d3-quadtree');
+var d3 = require('d3-quadtree');
 
 function createCoordinatesList(gardensJson){
     var coordinates = new Array();
@@ -25,4 +25,3 @@ GardensQuadtree.prototype.findNearestGarden = function(basePoint) {
 };
 
 exports.GardensQuadtree = GardensQuadtree;
-// exports.findNearestGarden = GardensQuadtree.prototype.findNearestGarden;
