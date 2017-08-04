@@ -27,6 +27,8 @@ router.route('/:lat/:long')
         var gardenInfo = [{'coordinates': {
                           'lat': nearest.coordinates.lat,
                           'long': nearest.coordinates.lng},
+                          'street': nearest.shem_rechov,
+                          'streetNum': nearest.ms_bait,
                           'name': nearest.shem_gina}];
         var result = chatfuel.createChatfuelButtonsAnswer(req.params, gardenInfo);
       }
