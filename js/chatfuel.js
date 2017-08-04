@@ -37,15 +37,17 @@ function getChatfuelEmptyAnswer(){
 function createChatfuelButtonsAnswer(startingPoint, gardensArray){
     var jsonResponse = [];
     var result = getChatfuelEmptyAnswer();
+    // Taking only the first garden
     result.attachment.payload.buttons.push(createPathButton(startingPoint, gardensArray[0].coordinates, gardensArray[0].name));
+    // Is there an address?
     if(gardensArray[0].street.length > 0 && gardensArray[0].streetNum != 0){
         result.attachment.payload.text = 'הגינה הקרובה ביותר היא גינת ' + gardensArray[0].name + ' בכתובת ' + gardensArray[0].street + ' ' + gardensArray[0].streetNum;
     }
     else{
         result.attachment.payload.text = 'הגינה הקרובה ביותר היא גינת ' + gardensArray[0].name;
     }
-    // var buttons = new Array();
     // // Handle list of gardens
+    // var buttons = new Array();
     // if(Array.isArray(gardensArray)){
     //     gardensArray.forEach(function(element) {
     //         buttons.push(createPathButton(startingPoint, element.coordinates, element.name));
