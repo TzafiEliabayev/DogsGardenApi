@@ -26,7 +26,7 @@ function blockSearchButton(){
 function blockFidbekButton(){
     var newfidbekButton = {
         "type": "show_block",
-        "block_name": "GetLocation - English",
+        "block_name": "Feedback",
         "title": "פידבק"
     }
     return newfidbekButton;
