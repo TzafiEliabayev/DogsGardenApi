@@ -14,6 +14,24 @@ function pathButton(url, title){
     return button;
 }
 
+function blockSearchButton(){
+    var newSearchButton = {
+        "type": "show_block",
+        "block_name": "GetLocation - English",
+        "title": "חיפוש מחדש"
+    }
+    return newSearchButton;
+}
+
+function blockFidbekButton(){
+    var newfidbekButton = {
+        "type": "show_block",
+        "block_name": "GetLocation - English",
+        "title": "פידבק"
+    }
+    return newfidbekButton;
+}
+
 function createPathButton(starting, desination, title){
     var url = pathUrl(starting, desination);
     var button = pathButton(url, title);
@@ -39,6 +57,8 @@ function createChatfuelButtonsAnswer(startingPoint, gardensArray){
     var result = getChatfuelEmptyAnswer();
     // Taking only the first garden
     result.attachment.payload.buttons.push(createPathButton(startingPoint, gardensArray[0].coordinates, gardensArray[0].name));
+    result.attachment.payload.buttons.push(blockSearchButton());
+    result.attachment.payload.buttons.push(blockFidbekButton());
     // Is there an address?
     if(gardensArray[0].street.length > 0 && gardensArray[0].streetNum != 0){
         result.attachment.payload.text = 'הגינה הקרובה ביותר היא גינת ' + gardensArray[0].name + ' בכתובת ' + gardensArray[0].street + ' ' + gardensArray[0].streetNum;
