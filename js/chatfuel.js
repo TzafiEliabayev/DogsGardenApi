@@ -66,6 +66,9 @@ function createChatfuelButtonsAnswer(startingPoint, gardensArray){
             result.attachment.payload.text = 'הגינה הקרובה ביותר היא גינת ' + gardensArray[0].name;
         }
     }
+    else{
+        result.attachment.payload.text = 'נא נסה שנית מתוך תל-אביב';
+    }
 
     result.attachment.payload.buttons.push(blockSearchButton());
     result.attachment.payload.buttons.push(blockFidbekButton());

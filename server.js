@@ -34,11 +34,7 @@ router.route('/:lat/:long')
       }
       else{
         result = chatfuel.createChatfuelButtonsAnswer(null, null);
-        result.unshift({
-                   "messages": [
-                     {"text": "נא נסה שנית מתוך תל-אביב"},
-                     {"text": "Please try again when you're in TLV"}
-      ]})}
+      }
       res.send(result);
     });
 
