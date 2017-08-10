@@ -56,9 +56,9 @@ function createChatfuelButtonsAnswer(startingPoint, gardensArray){
     var jsonResponse = [];
     var result = getChatfuelEmptyAnswer();
 
-    result.attachment.payload.buttons.push(blockFidbekButton());
-    result.attachment.payload.buttons.push(blockSearchButton());
     result.attachment.payload.buttons.push(createPathButton(startingPoint, gardensArray[0].coordinates, gardensArray[0].name));
+    result.attachment.payload.buttons.push(blockSearchButton());
+    result.attachment.payload.buttons.push(blockFidbekButton());
 
     // Is there an address?
     if(gardensArray[0].street.length > 0 && gardensArray[0].streetNum != 0){
