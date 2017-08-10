@@ -30,14 +30,15 @@ router.route('/:lat/:long')
                           'street': nearest.shem_rechov,
                           'streetNum': nearest.ms_bait,
                           'name': nearest.shem_gina}];
-        var result = chatfuel.createChatfuelButtonsAnswer(req.params, gardenInfo);
+        result = chatfuel.createChatfuelButtonsAnswer(req.params, gardenInfo);
       }
       else{
-        result = {
+        result = chatfuel.createChatfuelButtonsAnswer(null, null);
+        result.unshift({
                    "messages": [
                      {"text": "נא נסה שנית מתוך תל-אביב"},
                      {"text": "Please try again when you're in TLV"}
-      ]}}
+      ]})}
       res.send(result);
     });
 

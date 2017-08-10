@@ -53,20 +53,25 @@ function getChatfuelEmptyAnswer(){
 }
 
 function createChatfuelButtonsAnswer(startingPoint, gardensArray){
+
     var jsonResponse = [];
     var result = getChatfuelEmptyAnswer();
 
-    result.attachment.payload.buttons.push(createPathButton(startingPoint, gardensArray[0].coordinates, gardensArray[0].name));
+    if(startingPoint != null && gardensArray != null){
+        result.attachment.payload.buttons.push(createPathButton(startingPoint, gardensArray[0].coordinates, gardensArray[0].name));
+        if(gardensArray[0].street.length > 0 && gardensArray[0].streetNum != 0){
+            result.attachment.payload.text = 'הגינה הקרובה ביותר היא גינת ' + gardensArray[0].name + ' בכתובת ' + gardensArray[0].street + ' ' + gardensArray[0].streetNum;
+        }
+        else{
+            result.attachment.payload.text = 'הגינה הקרובה ביותר היא גינת ' + gardensArray[0].name;
+        }
+    }
+
     result.attachment.payload.buttons.push(blockSearchButton());
     result.attachment.payload.buttons.push(blockFidbekButton());
 
     // Is there an address?
-    if(gardensArray[0].street.length > 0 && gardensArray[0].streetNum != 0){
-        result.attachment.payload.text = 'הגינה הקרובה ביותר היא גינת ' + gardensArray[0].name + ' בכתובת ' + gardensArray[0].street + ' ' + gardensArray[0].streetNum;
-    }
-    else{
-        result.attachment.payload.text = 'הגינה הקרובה ביותר היא גינת ' + gardensArray[0].name;
-    }
+
     // // Handle list of gardens
     // var buttons = new Array();
     // if(Array.isArray(gardensArray)){
